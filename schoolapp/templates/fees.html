@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>💰 Fees</h2>
+<a href="{% url 'add_fee' %}" class="btn-link">➕ Add Fee Record</a>
+<div class="card" style="margin-top:15px;">
+  <table style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#14213d; color:white;">
+      <tr>
+        <th>Student</th><th>Amount</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in fees %}
+        <tr style="border-bottom:1px solid #ddd;">
+          <td>{{ f.student.name }}</td>
+          <td>{{ f.amount }}</td>
+          <td>{{ f.status }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="3">No fee records yet</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

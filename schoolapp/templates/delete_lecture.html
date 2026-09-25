@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Delete Lecture - Fine Tech School System{% endblock %}
+
+{% block content %}
+<h2 class="page-title"><i class="fas fa-triangle-exclamation"></i> Delete Lecture</h2>
+
+<div class="card" style="max-width: 480px;">
+  <p>Are you sure you want to remove this lecture from the timetable?</p>
+  <p><strong>{{ lecture.subject }}</strong> — Class {{ lecture.class_name }}<br>
+     {{ lecture.day_of_week }}, {{ lecture.start_time|time:"H:i" }}–{{ lecture.end_time|time:"H:i" }}<br>
+     Teacher: {{ lecture.teacher.name }}</p>
+
+  <form method="post" style="margin-top: 16px;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Yes, Delete</button>
+    <a href="{% url 'lectures' %}" class="btn" style="background:#8d99ae;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

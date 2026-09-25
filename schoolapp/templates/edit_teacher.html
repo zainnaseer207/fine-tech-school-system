@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Teacher</h2>
+    <form method="POST" action="">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ teacher.name }}" required>
+    <input type="text" name="subject" value="{{ teacher.subject }}" required>
+    <input type="text" name="email" value="{{ teacher.email }}" required>
+    <button type="submit">Update Teacher</button>
+</form>
+
+</div>
+{% endblock %}

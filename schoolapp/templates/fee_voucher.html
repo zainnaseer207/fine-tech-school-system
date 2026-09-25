@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fee Voucher</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .voucher { border: 2px dashed #2c3e50; padding: 20px; border-radius: 10px; }
+        h2 { text-align: center; color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background: #2c3e50; color: white; }
+        .total { font-weight: bold; }
+        .footer { margin-top: 20px; font-size: 14px; color: #555; }
+    </style>
+</head>
+<body>
+<div class="voucher">
+    <h2>📘 School Fee Voucher</h2>
+    <p><b>Name:</b> {{ student.name }}</p>
+    <p><b>Class:</b> {{ student.student_class }} | <b>Roll No:</b> {{ student.roll_no }}</p>
+    <p><b>Father's Name:</b> {{ student.father_name }}</p>
+    <p><b>Contact:</b> {{ student.contact }}</p>
+    <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+
+    <table>
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+    </tr>
+    {% for fee in fees %}
+    <tr>
+        <td>{{ fee.date }}</td>
+        <td>{{ fee.amount }}</td>
+        <td>{{ fee.status }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td class="total" colspan="2">Total</td>
+        <td class="total">{{ total_amount }}</td>
+    </tr>
+    </table>
+
+
+
+    <div class="footer">
+        ⚠️ Please pay fees before the due date to avoid fine.  
+        🌟 *Education is the key to success.* 🌟
+    </div>
+
+    <p style="margin-top:20px; text-align:center;">
+        <a href="?download=pdf">⬇ Download as PDF</a>
+    </p>
+</div>
+</body>
+</html>

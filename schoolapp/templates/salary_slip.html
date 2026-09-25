@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="salary-slip" style="max-width:800px; margin:auto; padding:30px; border:3px solid #264653; border-radius:15px; background:#e8f0f8; font-family:'Segoe UI', Arial, sans-serif;">
+
+    <!-- Header with Logo & QR -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <img src="{{ school_logo_url }}" alt="School Logo" style="height:80px;">
+        <div style="text-align:center; flex-grow:1; margin-left:20px;">
+            <h1 style="color:#264653;">{{ school_name }}</h1>
+            <p style="color:#1b4965; font-size:14px;">{{ school_address }} | Phone: {{ school_phone }} | Email: {{ school_email }}</p>
+        </div>
+        <div>
+            <img src="{{ qr_code_url }}" alt="QR Code" style="height:80px;">
+        </div>
+    </div>
+
+    <h2 style="text-align:center; color:#264653;">🧑‍🏫 Salary Slip</h2>
+    <p style="text-align:center; font-style:italic; color:#457b9d;">
+        "Education is the most powerful weapon to change the world." – Nelson Mandela
+    </p>
+    <hr style="border:1px dashed #264653; margin-bottom:20px;">
+
+    <!-- Teacher Info -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; margin-bottom:20px;">
+        <div>
+            <p><b>Name:</b> {{ teacher.name }}</p>
+            <p><b>Designation:</b> {{ teacher.designation }}</p>
+            <p><b>Department:</b> {{ teacher.department }}</p>
+        </div>
+        <div>
+            <p><b>Month:</b> {{ month }}</p>
+            <p><b>Date:</b> {{ today }}</p>
+            <p><b>Employee ID:</b> {{ teacher.employee_id }}</p>
+            <p>Allowances: {{ teacher.allowances }}</p>
+
+        </div>
+    </div>
+
+    <!-- Salary Table -->
+    <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+        <thead style="background:#264653; color:white; font-weight:bold;">
+            <tr>
+                <th style="padding:12px; border:1px solid #14213d;">Earnings / Deductions</th>
+                <th style="padding:12px; border:1px solid #14213d;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in salary.items %}
+            <tr style="text-align:center;">
+                <td style="padding:12px; border:1px solid #14213d;">{{ key }}</td>
+                <td style="padding:12px; border:1px solid #14213d;">{{ value }}</td>
+            </tr>
+            {% endfor %}
+            <tr style="font-weight:bold; background:#8d99ae; text-align:center;">
+                <td>Net Pay</td>
+                <td>{{ net_pay }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div style="display:flex; justify-content:space-between; margin-top:30px;">
+        <p>Authorized Signature: __________________</p>
+        <p>HR Dept.</p>
+    </div>
+</div>
+
+<style>
+@media print {
+    body { background:white; }
+    .salary-slip { border:none; }
+}
+</style>
+<a href="{% url 'download_salary_slip' teacher.id %}" class="btn btn-success">⬇ Download Salary Slip (PDF)</a>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>💰 School Funds</h2>
+<a href="{% url 'add_fund' %}" class="btn">➕ Add Fund</a>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Amount</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+  {% for f in funds %}
+  <tr>
+    <td>{{ f.title }}</td>
+    <td>{{ f.amount }}</td>
+    <td>{% if f.fund_type == "Income" %} ✅ Income {% else %} ❌ Expenditure {% endif %}</td>
+    <td>{{ f.date }}</td>
+    <td>{{ f.description }}</td>
+    <td>
+      <a href="{% url 'edit_fund' f.id %}">✏️ Edit</a> |
+      <a href="{% url 'delete_fund' f.id %}">🗑️ Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="6">No funds recorded</td></tr>
+  {% endfor %}
+</table>
+
+<hr>
+<h3>📊 Summary</h3>
+<p>✅ Total Income: <b>{{ total_income }}</b></p>
+<p>❌ Total Expenditure: <b>{{ total_expenditure }}</b></p>
+<p>💵 Balance: <b>{{ balance }}</b></p>
+{% endblock %}

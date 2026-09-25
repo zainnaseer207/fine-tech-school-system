@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load dict_extras %}
+{% block title %}Attendance - Fine Tech School System{% endblock %}
+
+{% block extra_head %}
+<style>
+  .class-group { margin-bottom: 26px; }
+  .class-group h3 {
+    color: var(--navy);
+    font-size: 16px;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #edf0f4;
+  }
+  .class-group h3 .count { color: #6b7280; font-weight: 400; font-size: 14px; }
+  .attendance-choice { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; cursor: pointer; font-weight: 600; font-size: 13px; }
+  .attendance-choice.present { color: #2a9d5f; }
+  .attendance-choice.absent { color: #d64545; }
+  .today-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #1d2939;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title"><i class="fas fa-chart-simple"></i> Attendance</h2>
+<div class="today-badge"><i class="fas fa-calendar-day"></i> Marking attendance for {{ today|date:"d M Y" }}</div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="card">
+    {% for c in classes %}
+      <div class="class-group">
+        <h3>Class {{ c.class_name }} <span class="count">({{ c.total }} student{{ c.total|pluralize }})</span></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Roll No</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in students %}
+              {% if s.class_name == c.class_name %}
+              <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.roll_no }}</td>
+                <td>
+                  <label class="attendance-choice present">
+                    <input type="radio" name="attendance_{{ s.id }}" value="Present"
+                      {% if todays_records|get_item:s.id == "Present" %}checked{% endif %}>
+                    <i class="fas fa-check"></i> Present
+                  </label>
+                  <label class="attendance-choice absent">
+                    <input type="radio" name="attendance_{{ s.id }}" value="Absent"
+                      {% if todays_records|get_item:s.id == "Absent" %}checked{% endif %}>
+                    <i class="fas fa-xmark"></i> Absent
+                  </label>
+                </td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% empty %}
+      <p>No students found yet. Add students first, then come back here to mark attendance.</p>
+    {% endfor %}
+  </div>
+
+  {% if students %}
+  <button type="submit" class="btn btn-success" style="margin-top: 16px;">
+    <i class="fas fa-floppy-disk"></i> Save Attendance
+  </button>
+  {% endif %}
+</form>
+
+<a href="{% url 'attendance_pdf' %}" target="_blank" class="btn" style="margin-top: 16px; display: inline-block;">
+  <i class="fas fa-file-arrow-down"></i> Download Attendance Report (PDF)
+</a>
+{% endblock %}

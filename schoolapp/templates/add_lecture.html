@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Schedule Lecture - Fine Tech School System{% endblock %}
+
+{% block content %}
+<h2 class="page-title"><i class="fas fa-chalkboard"></i> Schedule a Lecture</h2>
+
+<div class="card" style="max-width: 500px;">
+  <form method="post">
+    {% csrf_token %}
+
+    <label>Subject</label>
+    <input type="text" name="subject" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+
+    <label>Class</label>
+    <input type="text" name="class_name" placeholder="e.g. 10-A" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+
+    <label>Teacher</label>
+    <select name="teacher" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+      <option value="">-- Select Teacher --</option>
+      {% for t in teachers %}
+        <option value="{{ t.id }}">{{ t.name }} ({{ t.subject }})</option>
+      {% endfor %}
+    </select>
+
+    <label>Day</label>
+    <select name="day_of_week" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+      <option value="">-- Select Day --</option>
+      {% for value, label in days %}
+        <option value="{{ value }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Start Time</label>
+    <input type="time" name="start_time" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+
+    <label>End Time</label>
+    <input type="time" name="end_time" required style="width:100%; padding:10px; margin:6px 0 14px; border-radius:6px; border:1px solid #ddd;">
+
+    <label>Room (optional)</label>
+    <input type="text" name="room" style="width:100%; padding:10px; margin:6px 0 20px; border-radius:6px; border:1px solid #ddd;">
+
+    <button type="submit" class="btn btn-success"><i class="fas fa-floppy-disk"></i> Save Lecture</button>
+    <a href="{% url 'lectures' %}" class="btn" style="background:#8d99ae;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<h2>Edit Result Card for {{ student.name }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Grade</th>
+        </tr>
+        {% for form in formset %}
+        <tr>
+            <td>{{ form.subject }}</td>
+            <td>{{ form.marks_obtained }}</td>
+            <td>{{ form.total_marks }}</td>
+            <td>{{ form.grade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button type="submit">Save & Download Result Card PDF</button>
+</form>

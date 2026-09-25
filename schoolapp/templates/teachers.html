@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin-bottom:20px; color:#14213d;">👩‍🏫 Teachers</h2>
+
+<a href="{% url 'add_teacher' %}" 
+   style="display:inline-block; margin-bottom:15px; background:#fca311; color:white; padding:10px 18px; border-radius:6px; text-decoration:none; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15); transition:0.3s;">
+   ➕ Add Teacher
+</a>
+
+<div style="overflow-x:auto; background:white; padding:15px; border-radius:10px; box-shadow:0 3px 8px rgba(0,0,0,0.1);">
+  <table style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#14213d; color:white;">
+      <tr>
+        <th style="padding:12px;">Name</th>
+        <th style="padding:12px;">Subject</th>
+        <th style="padding:12px;">Email</th>
+        <th style="padding:12px;">Phone</th>
+        <th style="padding:12px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for teacher in teachers %}
+      <tr style="border-bottom:1px solid #ddd; transition:background 0.3s;">
+        <td style="padding:10px;">{{ teacher.name }}</td>
+        <td style="padding:10px;">{{ teacher.subject }}</td>
+        <td style="padding:10px;">{{ teacher.email }}</td>
+        <td style="padding:10px;">{{ teacher.phone }}</td>
+        <td style="padding:10px;">
+          <a href="{% url 'edit_teacher' teacher.id %}" 
+             style="color:#2980b9; text-decoration:none; font-weight:bold; margin-right:8px;">
+             ✏️ Edit
+          </a>
+          <a href="{% url 'delete_teacher' teacher.id %}" 
+             onclick="return confirm('Delete this teacher?')" 
+             style="color:#e63946; text-decoration:none; font-weight:bold;">
+             🗑️ Delete
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" style="padding:15px; text-align:center; color:#666;">No teachers yet</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

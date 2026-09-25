@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin-bottom:20px; color:#14213d;">✏️ Edit Notice</h2>
+
+<div class="card" style="max-width:500px; margin:auto;">
+  <form method="post">
+    {% csrf_token %}
+    <label>Title</label>
+    <input type="text" name="title" value="{{ notice.title }}" required
+           style="width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px;">
+
+    <label>Description</label>
+    <textarea name="description" rows="4" required
+              style="width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px;">{{ notice.description }}</textarea>
+
+    <button type="submit"
+            style="background:#fca311; color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer; margin-top:10px;">
+      💾 Update Notice
+    </button>
+  </form>
+</div>
+{% endblock %}

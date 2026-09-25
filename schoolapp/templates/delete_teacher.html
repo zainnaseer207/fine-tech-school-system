@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-danger">Delete Teacher</h2>
+    <p>Are you sure you want to delete <strong>{{ teacher.name }}</strong> (Subject: {{ teacher.subject }})?</p>
+
+    <form method="POST">
+        {% csrf_token %}

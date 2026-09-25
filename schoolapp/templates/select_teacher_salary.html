@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Teacher for Salary Slip</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 20px; color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background: #2c3e50; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        a.btn { padding: 8px 14px; background: #27ae60; color: white; text-decoration: none; border-radius: 6px; }
+        a.btn:hover { background: #219150; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Select Teacher for Salary Slip</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Action</th>
+        </tr>
+        {% for teacher in teachers %}
+        <tr>
+            <td>{{ teacher.id }}</td>
+            <td>{{ teacher.name }}</td>
+            <td>{{ teacher.designation }}</td>
+            <td>
+                <a href="{% url 'generate_salary_slip' teacher.id %}" class="btn">Generate Slip</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No teachers found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

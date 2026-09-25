@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="result-card" style="max-width:900px; margin:auto; padding:30px; border:3px solid #2a9d8f; border-radius:15px; background:#e0f7f4; font-family:'Segoe UI', Arial, sans-serif;">
+
+    <!-- Header with Logo & QR -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <img src="{{ school_logo_url }}" alt="School Logo" style="height:80px;">
+        <div style="text-align:center; flex-grow:1; margin-left:20px;">
+            <h1 style="color:#2a9d8f;">{{ school_name }}</h1>
+            <p style="color:#1b4965; font-size:14px;">{{ school_address }} | Phone: {{ school_phone }} | Email: {{ school_email }}</p>
+        </div>
+        <div>
+            <img src="{{ qr_code_url }}" alt="QR Code" style="height:80px;">
+        </div>
+    </div>
+
+    <h2 style="text-align:center; color:#2a9d8f;">📄 Student Result Card</h2>
+    <p style="text-align:center; font-style:italic; color:#264653;">
+        "The beautiful thing about learning is that no one can take it away from you." – B.B. King
+    </p>
+    <hr style="border:1px dashed #2a9d8f; margin-bottom:20px;">
+
+    <!-- Student Info -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; margin-bottom:20px;">
+        <div>
+            <p><b>Student Name:</b> {{ student.name }}</p>
+            <p><b>Class:</b> {{ student.class_name }}</p>
+            <p><b>Roll No:</b> {{ student.roll_no }}</p>
+        </div>
+        <div>
+            <p><b>Date:</b> {{ today }}</p>
+            <p><b>Academic Year:</b> {{ academic_year }}</p>
+        </div>
+    </div>
+
+    <!-- Subject Table -->
+    <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+        <thead style="background:#2a9d8f; color:white; font-weight:bold;">
+            <tr>
+                <th style="padding:12px; border:1px solid #14213d;">Subject</th>
+                <th style="padding:12px; border:1px solid #14213d;">Marks Obtained</th>
+                <th style="padding:12px; border:1px solid #14213d;">Maximum Marks</th>
+                <th style="padding:12px; border:1px solid #14213d;">Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject, data in results.items %}
+            <tr style="text-align:center;">
+                <td style="padding:12px; border:1px solid #14213d;">{{ subject }}</td>
+                <td style="padding:12px; border:1px solid #14213d;">{{ data.marks }}</td>
+                <td style="padding:12px; border:1px solid #14213d;">{{ data.max_marks }}</td>
+                <td style="padding:12px; border:1px solid #14213d;">{{ data.percentage }}%</td>
+            </tr>
+            {% endfor %}
+            <tr style="font-weight:bold; background:#a0e7e5; text-align:center;">
+                <td>Total</td>
+                <td>{{ total_marks }}</td>
+                <td>{{ total_max }}</td>
+                <td>{{ overall_percentage }}%</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Footer -->
+    <div style="display:flex; justify-content:space-between; margin-top:30px;">
+        <p>Class Teacher: __________________</p>
+        <p>Principal: __________________</p>
+    </div>
+</div>
+
+
+<style>
+@media print {
+    body { background:white; }
+    .result-card { border:none; page-break-after:always; }
+}
+</style>
+<a href="{% url 'download_result_card' student.id %}" class="btn btn-success">⬇ Download Result Card (PDF)</a>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load dict_extras %}
+{% block title %}Lectures - Fine Tech School System{% endblock %}
+
+{% block extra_head %}
+<style>
+  .day-group { margin-bottom: 24px; }
+  .day-group h3 {
+    color: var(--navy);
+    font-size: 16px;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #edf0f4;
+  }
+  .filter-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .filter-bar select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  .action-link { text-decoration: none; font-weight: 600; font-size: 13px; margin-right: 10px; }
+  .action-edit { color: #2980b9; }
+  .action-delete { color: #d64545; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title"><i class="fas fa-chalkboard"></i> Lecture Timetable</h2>
+
+<a href="{% url 'add_lecture' %}" class="btn" style="margin-bottom: 20px;">
+  <i class="fas fa-plus"></i> Schedule Lecture
+</a>
+
+<form method="get" class="filter-bar">
+  <select name="class_name" onchange="this.form.submit()">
+    <option value="">All Classes</option>
+    {% for c in classes %}
+      <option value="{{ c }}" {% if c == selected_class %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<div class="card">
+  {% for day in day_order %}
+    <div class="day-group">
+      <h3>{{ day }}</h3>
+      {% with day_lectures=grouped|get_item:day %}
+        {% if day_lectures %}
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Subject</th>
+              <th>Class</th>
+              <th>Teacher</th>
+              <th>Room</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lec in day_lectures %}
+            <tr>
+              <td>{{ lec.start_time|time:"H:i" }} - {{ lec.end_time|time:"H:i" }}</td>
+              <td>{{ lec.subject }}</td>
+              <td>{{ lec.class_name }}</td>
+              <td>{{ lec.teacher.name }}</td>
+              <td>{{ lec.room|default:"—" }}</td>
+              <td>
+                <a href="{% url 'edit_lecture' lec.id %}" class="action-link action-edit"><i class="fas fa-pen"></i> Edit</a>
+                <a href="{% url 'delete_lecture' lec.id %}" class="action-link action-delete"><i class="fas fa-trash"></i> Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p style="color: #6b7280; font-size: 14px;">No lectures scheduled.</p>
+        {% endif %}
+      {% endwith %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

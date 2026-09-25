@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="width: 700px; margin: auto; border: 1px solid #000; padding: 20px; font-family: Arial, sans-serif; font-size: 14px;">
+    <h2 style="text-align: center; margin-bottom: 20px;">Staff Salary Slip</h2>
+    <p style="text-align: right;"><strong>Date:</strong> {{ today }}</p>
+
+    <table border="1" cellspacing="0" cellpadding="6" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td><strong>Employee ID</strong></td>
+            <td>{{ staff.employee_id }}</td>
+        </tr>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td>{{ staff.name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Department</strong></td>
+            <td>{{ staff.department }}</td>
+        </tr>
+        <tr>
+            <td><strong>Designation</strong></td>
+            <td>{{ staff.designation }}</td>
+        </tr>
+        <tr>
+            <td><strong>Contact</strong></td>
+            <td>{{ staff.contact }}</td>
+        </tr>
+    </table>
+
+    <p style="margin-top: 20px; padding: 10px; border: 1px dashed #000;">
+        <strong>Note:</strong> Staff salary slip is generated for record keeping.
+    </p>
+    <div style="text-align: center; margin-top: 20px;">
+    <a href="?download=pdf" style="display: inline-block; padding: 8px 16px; background: #28a745; color: #fff; text-decoration: none;">
+        Download as PDF
+    </a>
+</div>
+</div>
+{% endblock %}

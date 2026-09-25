@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Fine Tech School System{% endblock %}
+
+{% block extra_head %}
+<style>
+  .greeting { color: var(--navy); margin-bottom: 4px; font-weight: 600; }
+  #clock { font-size: 18px; font-weight: bold; color: var(--accent); margin-bottom: 22px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+  }
+  .stat-card {
+    color: white;
+    text-align: center;
+  }
+  .stat-card h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; }
+  .stat-card .value { font-size: 26px; font-weight: bold; margin: 4px 0; }
+  .stat-card a { color: white; text-decoration: none; font-size: 13px; opacity: 0.9; }
+  .stat-card a:hover { opacity: 1; text-decoration: underline; }
+
+  .bg-amber { background: #fca311; }
+  .bg-teal { background: #2a9d8f; }
+  .bg-slate { background: #264653; }
+  .bg-coral { background: #e76f51; }
+  .bg-blue { background: #457b9d; }
+  .bg-gray { background: #8d99ae; }
+  .bg-purple { background: #6a4c93; }
+  .bg-gold { background: #ffbe0b; color: #1d2939 !important; }
+  .bg-orange { background: #fb5607; }
+  .bg-violet { background: #8338ec; }
+
+  .quick-actions {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+  }
+  .quick-actions .card a { display: block; color: inherit; text-decoration: none; margin-top: 6px; font-size: 14px; }
+  .quick-actions .card a:hover { text-decoration: underline; }
+
+  .info-grid {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .info-grid .card ul { padding-left: 18px; margin: 10px 0; }
+  .info-grid .card a { color: var(--navy); font-weight: 600; text-decoration: none; font-size: 14px; }
+  .info-grid .card a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="greeting">Welcome, {{ user.username }} <i class="fas fa-hand-sparkles" style="color: var(--accent);"></i></h2>
+<div id="clock"><i class="fas fa-clock"></i> --:--:--</div>
+
+<div class="stat-grid">
+  <div class="card stat-card bg-amber">
+    <h3><i class="fas fa-user-graduate"></i> Students</h3>
+    <p class="value">{{ students.count }}</p>
+    <a href="{% url 'students' %}">Manage &rarr;</a>
+  </div>
+  <div class="card stat-card bg-teal">
+    <h3><i class="fas fa-chalkboard-user"></i> Teachers</h3>
+    <p class="value">{{ teachers.count }}</p>
+    <a href="{% url 'teachers' %}">Manage &rarr;</a>
+  </div>
+  <div class="card stat-card bg-slate">
+    <h3><i class="fas fa-people-group"></i> Staff</h3>
+    <p class="value">{{ staff.count }}</p>
+    <a href="{% url 'staff' %}">Manage &rarr;</a>
+  </div>
+  <div class="card stat-card bg-coral">
+    <h3><i class="fas fa-chart-simple"></i> Attendance Today</h3>
+    <p class="value">{{ attendance_percentage }}</p>
+  </div>
+  <div class="card stat-card bg-blue">
+    <h3><i class="fas fa-money-bill-wave"></i> Fees Paid</h3>
+    <p class="value">{{ fee_percentage }}</p>
+    <a href="{% url 'fees' %}">Manage &rarr;</a>
+  </div>
+  <div class="card stat-card bg-gray">
+    <h3><i class="fas fa-envelope"></i> Unread Messages</h3>
+    <p class="value">{{ unread_messages }}</p>
+    <a href="{% url 'messages' %}">View &rarr;</a>
+  </div>
+</div>
+
+<div class="quick-actions">
+  <div class="card bg-gold">
+    <h3><i class="fas fa-file-invoice"></i> Fee Voucher</h3>
+    <a href="{% url 'select_student_fee' %}">Generate Fee Voucher</a>
+  </div>
+  <div class="card bg-orange">
+    <h3><i class="fas fa-money-check-dollar"></i> Salary Slip</h3>
+    <a href="{% url 'select_teacher_salary' %}">Teacher Salary Slip</a>
+    <a href="{% url 'select_staff_salary' %}">Staff Salary Slip</a>
+  </div>
+  <div class="card bg-violet">
+    <h3><i class="fas fa-graduation-cap"></i> Result Card</h3>
+    <a href="{% url 'select_student_result' %}">Generate Result Card</a>
+  </div>
+  <div class="card bg-purple">
+    <h3><i class="fas fa-sack-dollar"></i> Funds</h3>
+    <p style="margin: 4px 0;">Income: {{ total_income|default:"0" }}</p>
+    <p style="margin: 4px 0;">Expenditure: {{ total_expenditure|default:"0" }}</p>
+    <p style="margin: 4px 0;"><strong>Balance: {{ balance|default:"0" }}</strong></p>
+    <a href="{% url 'funds' %}">Manage Funds &rarr;</a>
+  </div>
+</div>
+
+<div class="info-grid">
+  <div class="card">
+    <h3><i class="fas fa-bullhorn"></i> Latest Notices</h3>
+    {% if notices %}
+      <ul>
+        {% for n in notices %}
+          <li><strong>{{ n.title }}</strong> &mdash; {{ n.date }}</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'notices' %}">View all notices &rarr;</a>
+    {% else %}
+      <p>No notices yet.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h3><i class="fas fa-calendar-days"></i> Upcoming Events</h3>
+    {% if events %}
+      <ul>
+        {% for e in events %}
+          <li><strong>{{ e.title }}</strong> &mdash; {{ e.event_date }}</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'events' %}">View all events &rarr;</a>
+    {% else %}
+      <p>No events scheduled.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  document.getElementById("clock").innerHTML =
+    '<i class="fas fa-clock"></i> ' + pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+{% endblock %}

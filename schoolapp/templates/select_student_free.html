@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="color:#14213d;">💰 Generate Fee Voucher</h2>
+
+<p>Select a student from the list to generate their fee voucher:</p>
+
+<table style="width:100%; border-collapse: collapse;">
+    <thead style="background:#264653; color:white;">
+        <tr>
+            <th style="padding:10px; border:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Name</th>
+            <th style="padding:10px; border:1px solid #ddd;">Class</th>
+            <th style="padding:10px; border:1px solid #ddd;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr style="text-align:center; border:1px solid #ddd;">
+            <td style="padding:10px;">{{ student.id }}</td>
+            <td style="padding:10px;">{{ student.name }}</td>
+            <td style="padding:10px;">{{ student.class_name }}</td>
+            <td style="padding:10px;">
+                <a href="{% url 'generate_fee_voucher' student.id %}" 
+                   style="padding:6px 12px; background:#fca311; color:white; text-decoration:none; border-radius:5px;">
+                   Generate Fee Voucher
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

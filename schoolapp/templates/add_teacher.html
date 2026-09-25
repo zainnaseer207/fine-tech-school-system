@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Teacher</h2>
+    <form method="POST" action="{% url 'add_teacher' %}">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="subject" placeholder="Subject" required>
+    <input type="text" name="email" placeholder="Email" required>
+    <button type="submit">Add Teacher</button>
+</form>
+
+</div>
+{% endblock %}

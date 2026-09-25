@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Students - Fine Tech School System{% endblock %}
+
+{% block extra_head %}
+<style>
+  .class-group { margin-bottom: 26px; }
+  .class-group h3 {
+    color: var(--navy);
+    font-size: 16px;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #edf0f4;
+  }
+  .class-group h3 .count { color: #6b7280; font-weight: 400; font-size: 14px; }
+  .action-link { text-decoration: none; font-weight: 600; font-size: 13px; margin-right: 10px; }
+  .action-edit { color: #2980b9; }
+  .action-delete { color: #d64545; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title"><i class="fas fa-user-graduate"></i> Students</h2>
+
+<a href="{% url 'add_student' %}" class="btn" style="margin-bottom: 20px;">
+  <i class="fas fa-plus"></i> Add Student
+</a>
+
+<div class="card">
+  {% for c in classes %}
+    <div class="class-group">
+      <h3>Class {{ c.class_name }} <span class="count">({{ c.total }} student{{ c.total|pluralize }})</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>Roll No</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in students %}
+            {% if s.class_name == c.class_name %}
+            <tr>
+              <td>{{ s.name }}</td>
+              <td>{{ s.father_name|default:"—" }}</td>
+              <td>{{ s.roll_no }}</td>
+              <td>{{ s.email }}</td>
+              <td>
+                <a href="{% url 'edit_student' s.id %}" class="action-link action-edit"><i class="fas fa-pen"></i> Edit</a>
+                <a href="{% url 'delete_student' s.id %}" class="action-link action-delete"><i class="fas fa-trash"></i> Delete</a>
+              </td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% empty %}
+    <p>No students found. Click "Add Student" to get started.</p>
+  {% endfor %}
+</div>
+
+<p style="margin-top: 16px; color: #6b7280; font-size: 14px;">
+  <i class="fas fa-circle-info"></i> Looking to mark or review attendance?
+  <a href="{% url 'attendance' %}" style="color: var(--navy); font-weight: 600;">Go to Attendance &rarr;</a>
+</p>
+{% endblock %}

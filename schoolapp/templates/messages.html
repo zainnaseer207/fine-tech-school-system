@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📨 Messages</h2>
+<div class="card">
+  <ul style="list-style:none; padding:0;">
+    {% for m in messages %}
+      <li style="padding:10px; border-bottom:1px solid #eee;">
+        <strong>{{ m.sender }}</strong> ({{ m.date }}) <br>
+        {{ m.content }} <br>
+        {% if not m.read %}
+          <a href="{% url 'mark_read' m.id %}" style="color:green;">✔ Mark as Read</a>
+        {% else %}
+          <span style="color:gray;">✅ Read</span>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No messages yet</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Staff</h2>
+    <form method="POST" action="">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ staff.name }}" required><br><br>
+
+  <label>Designation:</label>
+  <input type="text" name="designation" value="{{ staff.designation }}" required><br><br>
+
+  <label for="employee_id">Employee ID:</label><br>
+  <input type="text" name="employee_id" id="employee_id" value="{{ staff.employee_id }}" required><br><br>
+
+  <label for="department">Department:</label><br>
+  <input type="text" name="department" id="department" value="{{ staff.department }}"><br><br>
+
+
+  <label>Contact:</label>
+  <input type="text" name="contact" value="{{ staff.contact }}" required><br><br>
+
+  <button type="submit">Update Staff</button>
+</form>
+
+
+</div>
+{% endblock %}

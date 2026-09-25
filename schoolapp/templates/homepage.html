@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fine Tech - School Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+
+        body { display: flex; height: 100vh; overflow: hidden; background: #f0f2f5; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 60px;
+            background: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: width 0.3s;
+            overflow: hidden;
+        }
+        .sidebar.open { width: 200px; }
+        .sidebar .toggle-btn {
+            margin: 20px 0;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .sidebar .menu-item {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .sidebar .menu-item:hover { background: #34495e; }
+        .sidebar .menu-item i { font-size: 20px; margin-right: 10px; }
+        .sidebar.open .menu-item span { display: inline; }
+        .sidebar .menu-item span { display: none; }
+
+        /* Header */
+        .header {
+            height: 60px;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+        }
+        .header .school-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            color: #2c3e50;
+        }
+        .header .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 5px 10px;
+            background: #f9f9f9;
+        }
+        .header .search-box input {
+            border: none;
+            outline: none;
+            padding: 5px;
+            background: transparent;
+        }
+        .header .search-box i { font-size: 18px; margin-left: 5px; }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 { margin-bottom: 10px; }
+
+        /* Icons from Font Awesome */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="menu-item" onclick="showPanel('teacher')">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Teacher</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('student')">
+            <i class="fas fa-user-graduate"></i>
+            <span>Student</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('staff')">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff</span>
+        </div>
+    </div>
+
+    <!-- Main area -->
+    <div style="flex:1; display:flex; flex-direction:column;">
+        <!-- Header -->
+        <div class="header">
+            <div class="school-name">Fine Tech</div>
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="content">
+            <div class="card">
+                <h2>Dashboard</h2>
+                <p>Welcome to the Fine Tech School Management System.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+        }
+
+        function showPanel(panel) {
+            let html = '';
+            if(panel === 'teacher') {
+                html = `
+                    <div class="card">
+                        <h2>Teachers</h2>
+                        <p>Here you can add, edit, or view teachers.</p>
+                    </div>
+                `;
+            } else if(panel === 'student') {
+                html = `
+                    <div class="card">
+                        <h2>Students</h2>
+                        <p>Here you can add, edit, or view students.</p>
+                    </div>
+                `;
+            } else if(panel === 'staff') {
+                html = `
+                    <div class="card">
+                        <h2>Staff</h2>
+                        <p>Here you can add, edit, or view staff members.</p>
+                    </div>
+                `;
+            }
+            content.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

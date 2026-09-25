@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Staff</h2>
+    <form method="POST" action="{% url 'add_staff' %}">
+        {% csrf_token %}
+        <label>Name:</label><br>
+        <input type="text" name="name" placeholder="Enter name" required><br><br>
+
+        <label>Designation:</label><br>
+        <input type="text" name="designation" placeholder="Enter designation" required><br><br>
+
+        <label for="department">Department:</label><br>
+        <input type="text" name="department" placeholder="Enter department" id="department"><br><br>
+
+        <label for="employee_id">Employee ID:</label><br>
+        <input type="text" name="employee_id" placeholder="Enter Employee_id" id="employee_id" required><br><br>
+
+        <label>Contact:</label><br>
+        <input type="text" name="contact" placeholder="Enter contact number" required><br><br>
+
+        <button type="submit">Add Staff</button>
+        </form>
+</div>
+</form>
+
+</div>
+{% endblock %}

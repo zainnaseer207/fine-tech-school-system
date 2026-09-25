@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📅 Events</h2>
+<a href="{% url 'add_event' %}" class="btn-link">➕ Add Event</a>
+<div class="card" style="margin-top:15px;">
+  <ul style="list-style:none; padding:0;">
+    {% for e in events %}
+      <li style="padding:10px; border-bottom:1px solid #eee;">
+        <strong>{{ e.title }}</strong> ({{ e.event_date }}) <br>
+        {{ e.description }} <br>
+        <a href="{% url 'delete_event' e.id %}" style="color:red;">🗑 Delete</a>
+      </li>
+    {% empty %}
+      <li>No events yet</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

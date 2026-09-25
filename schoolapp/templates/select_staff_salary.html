@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Select Staff for Salary Slip</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in staff_list %}
+            <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.employee_id }}</td>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.department }}</td>
+                <td>{{ staff.designation }}</td>
+                <td>
+                    <a href="{% url 'generate_staff_salary_slip' staff.id %}">Generate Slip</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No staff found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

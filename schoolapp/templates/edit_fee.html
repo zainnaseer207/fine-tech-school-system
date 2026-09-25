@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin-bottom:20px; color:#14213d;">✏️ Edit Fee Record</h2>
+
+<div class="card" style="max-width:500px; margin:auto;">
+  <form method="post">
+    {% csrf_token %}
+    <label>Student</label>
+    <select name="student" required
+            style="width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px;">
+      {% for s in students %}
+        <option value="{{ s.id }}" {% if s.id == fee.student.id %}selected{% endif %}>
+          {{ s.name }} ({{ s.class_name }})
+        </option>
+      {% endfor %}
+    </select>
+
+    <label>Amount</label>
+    <input type="number" name="amount" step="0.01" value="{{ fee.amount }}" required
+           style="width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px;">
+
+    <label>Status</label>
+    <select name="status" required
+            style="width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px;">
+      <option value="Paid" {% if fee.status == 'Paid' %}selected{% endif %}>Paid</option>
+      <option value="Pending" {% if fee.status == 'Pending' %}selected{% endif %}>Pending</option>
+    </select>
+
+    <button type="submit"
+            style="background:#fca311; color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer; margin-top:10px;">
+      💾 Update Fee
+    </button>
+  </form>
+</div>
+{% endblock %}
