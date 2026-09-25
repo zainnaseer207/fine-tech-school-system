@@ -26,8 +26,17 @@ scheduling.
 
 ## Screenshots
 
-<!-- Add a few screenshots here once you're set up, e.g.: -->
-<!-- ![Dashboard](screenshots/dashboard.png) -->
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Students
+![Students](screenshots/students.png)
+
+### Attendance
+![Attendance](screenshots/attendance.png)
+
+### Lectures
+![Lectures](screenshots/lectures.png)
 
 ## Getting Started
 
